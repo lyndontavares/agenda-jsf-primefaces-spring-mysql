@@ -15,20 +15,20 @@ MySQL
 #Tipos Enumerados
 
 contato: 
--1 cancelado
-0 ativo 
-1 inativo 
+<b>-1</b> cancelado<br>
+<b>0</b ativo <br>
+<b>1</b inativo <br>
 
 evento: 
--1 cancelado
-0 aguardando
-1 confirmado
-2 realizado
+<b>-1</b cancelado<br>
+<b>0</b aguardando<br>
+<b>1</b confirmado<br>
+<b>2</b realizado<br>
 
 pagamento: 
-0 aberto
-1 pago
--1 cancelado
+<b>0</b aberto<br>
+<b>1</b pago<br>
+<b>-1</b cancelado<br>
 
 #Funcionalidades
 
