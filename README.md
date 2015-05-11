@@ -55,7 +55,7 @@ Parcelas
 
 * incluirParcelaEvento
 * editarParcelaEvento
-* * excluirPascelaEvento
+* excluirPascelaEvento
 * quitarParcelaEvento
 * expurgarParcelasCanceladasEvento;
 * confirmarPagamento
