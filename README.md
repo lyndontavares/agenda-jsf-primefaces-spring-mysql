@@ -13,7 +13,7 @@ MySQL
 
 #Funcionalidades
 
- contato: 0 ativo 1 inativo -1 cancelado
+ contato: <b>0 ativo 1 inativo -1 cancelado</b>
 
  evento: -1 cancelado 0 aguardando 1 confirmado 2 realizado 
 
