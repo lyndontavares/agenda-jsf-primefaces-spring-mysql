@@ -19,47 +19,53 @@ MySQL
 
  pagamento: 0 aberto 1 pago -1 cancelado
 
+Contatos
 
-    incluirContato
-    editarContato
-	ativarContato
-	inativarContato
-	cancelarContato
-	expurgarContatosCancelados
+incluirContato
+editarContato
+ativarContato
+inativarContato
+cancelarContato
+expurgarContatosCancelados
 
+Eventos
 
-    incluirEvento
-    editarEvento
-	confirmarEvento
-	realizarEvento
-	cancelarEvento
-	expurgarEventoCancelado
-	quitarEvento;
-	gerarParcelaEvento
-    incluirParcelaEvento
-    editarParcelaEvento
-	excluirPascelaEvento
-	quitarParcelaEvento
-	expurgarParcelasCanceladasEvento;
-	confirmarPagamento
-	cancelarPagamento
+incluirEvento
+editarEvento
+confirmarEvento
+realizarEvento
+cancelarEvento
+expurgarEventoCancelado
+quitarEvento;
+gerarParcelaEvento
 
+Parcelas
+
+incluirParcelaEvento
+editarParcelaEvento
+excluirPascelaEvento
+quitarParcelaEvento
+expurgarParcelasCanceladasEvento;
+confirmarPagamento
+cancelarPagamento
 
 tipoContato
-    incluir
-    editar
-	ativar
-	inativar
-	cancelar
-	expurgar
 
-	user
-    incluir
-    editar
-	ativar
-	inativar
-	cancelar
-	expurgar
+incluirTipoContato
+editarTipoContato
+ativarTipoContato
+inativarTipoContato
+cancelarTipoContato
+expurgarTipoContato
+
+user
+
+incluirUser
+editarUser
+ativarUser
+inativarUser
+cancelarUser
+expurgarUser
 
 
 Contato: integraldominio@gmail.com
