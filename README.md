@@ -13,11 +13,23 @@ MySQL
 
 #Funcionalidades
 
- contato: <b>0 ativo 1 inativo -1 cancelado</b>
+--Enumerados
 
- evento: -1 cancelado 0 aguardando 1 confirmado 2 realizado 
+contato: 
+-1 cancelado
+0 ativo 
+1 inativo 
 
- pagamento: 0 aberto 1 pago -1 cancelado
+evento: 
+-1 cancelado 
+0 aguardando 
+1 confirmado 
+2 realizado 
+
+pagamento: 
+0 aberto 
+1 pago 
+-1 cancelado
 
 Contatos
 
