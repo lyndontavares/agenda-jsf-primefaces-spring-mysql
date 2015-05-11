@@ -11,9 +11,8 @@ Hibernate
 MySQL
 
 
-#Funcionalidades
 
-Enumerados
+#Tipos Enumerados
 
 contato: 
 <li>-1 cancelado</li>
@@ -30,6 +29,8 @@ pagamento:
 <li>0 aberto </li>
 <li>1 pago </li>
 <li>-1 cancelado</li>
+
+#Funcionalidades
 
 Contatos
 
