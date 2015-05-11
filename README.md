@@ -33,12 +33,12 @@ pagamento:
 
 Contatos
 
-incluirContato
-editarContato
-ativarContato
-inativarContato
+* incluirContato
+* editarContato
+* ativarContato
+* inativarContato
 cancelarContato
-expurgarContatosCancelados
+* expurgarContatosCancelados
 
 Eventos
 
