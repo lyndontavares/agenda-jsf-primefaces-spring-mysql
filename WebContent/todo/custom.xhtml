@@ -1,0 +1,62 @@
+<h:form>
+    <p:growl showDetail="true"/>
+ 
+    <p:panel header="Validate">
+        <h:panelGrid columns="4" cellpadding="5">
+            <h:outputLabel for="email1" value="Email 1: (JSF Validation)" />
+            <p:inputText id="email1" value="#{customValidationView.text}">
+                <f:validator validatorId="custom.emailValidator" />
+            </p:inputText>
+            <p:message for="email1" display="tooltip" />
+            <h:outputText value="#{customValidationView.text}" />
+ 
+            <h:outputLabel for="email2" value="Email 2: (Bean Validation)" />
+            <p:inputText id="email2" value="#{customValidationView.email}" />
+            <p:message for="email2" display="tooltip" />
+            <h:outputText value="#{customValidationView.email}" />
+        </h:panelGrid>
+ 
+        <p:commandButton value="Save" ajax="false" icon="ui-icon-check" validateClient="true"/>
+    </p:panel>
+</h:form>
+ 
+<script type="text/javascript">
+    /**
+     * Faces Validator
+     */
+    PrimeFaces.validator['custom.emailValidator'] = {
+ 
+        pattern: /\S+@\S+/,
+ 
+        validate: function(element, value) {
+            //use element.data() to access validation metadata, in this case there is none.
+            if(!this.pattern.test(value)) {
+                throw {
+                    summary: 'Validation Error',
+                    detail: value + ' is not a valid email.'
+                }
+            }
+        }
+    };
+ 
+    /**
+     * Bean validator
+     */
+    PrimeFaces.validator['Email'] = {
+ 
+        pattern: /\S+@\S+/,
+ 
+        MESSAGE_ID: 'org.primefaces.examples.validate.email.message',
+ 
+        validate: function(element, value) {
+            var vc = PrimeFaces.util.ValidationContext;
+ 
+            if(!this.pattern.test(value)) {
+                var msgStr = element.data('p-email-msg'),
+                msg = msgStr ? {summary:msgStr, detail: msgStr} : vc.getMessage(this.MESSAGE_ID);
+ 
+                throw msg;
+            }
+        }
+    };
+</script>

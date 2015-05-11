@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:b="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/security
+                            http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http auto-config="true" use-expressions="true" access-denied-page="/acessoNegado.xhtml">
+		<intercept-url pattern="/index.xhtml" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/pages/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/site/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/template/**" access="hasRole('none')" />
+
+		<form-login login-page="/login.xhtml"
+			authentication-failure-url="/login.xhtml?error=true" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT username, password, enable FROM User WHERE username=?"
+				authorities-by-username-query="SELECT User_username AS username, Auth_authority AS authority FROM User_Auth WHERE User_username=?" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<b:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<b:property name="url" value="jdbc:mysql://localhost:3306/agendaweb" />
+		<b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<b:property name="username" value="root" />
+		<b:property name="password" value="1234" />
+	</b:bean>
+</b:beans>

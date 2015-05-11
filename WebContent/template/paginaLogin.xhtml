@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+	<style type="text/css">
+		
+		.ui-panelgrid tr, td {
+			border: 1 !important;
+		}
+		
+		.technosGrid td, tr {
+			border: 0 !important;
+		}
+	</style>
+
+</h:head>
+
+
+<h:body style="padding: 20px;">
+	<div id="page">
+		<div id="header">
+			<ui:insert name="header">
+
+				<!-- fixed="top" -->
+				<b:navBar brand="Web 1.0" brandHref="#" inverse="true">
+					<b:navbarLinks>
+  						<b:navLink value="Login" href="/login.xhtml"></b:navLink>
+					</b:navbarLinks>
+				</b:navBar>
+
+			</ui:insert>
+		</div>
+
+
+		<div id="content">
+			<ui:insert name="content">
+
+			</ui:insert>
+
+
+			<hr />
+			<footer>
+			<p align="center">Web 1.0 © Company 2014</p>
+			</footer>
+
+
+		</div>
+
+		<div id="footer">
+			<ui:insert name="footer">
+			</ui:insert>
+		</div>
+
+
+	</div>
+
+
+</h:body>
+</html>

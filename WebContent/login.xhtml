@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+	<h:head>
+		<title>FitnessWeb</title>
+
+		<style type="text/css">
+.ui-widget {
+	font-size: 10px;
+	!
+	important;
+}
+</style>
+	</h:head>
+
+	<h:body>
+
+		<ui:composition template="/template/paginaLogin.xhtml">
+
+			<ui:define name="content">
+
+<!-- 				<b:jumbotron>
+					<b:container>
+						<h1>Agenda Web</h1>
+						<p>Sistema em Java JSF com PrimeFaces e Twitter Bootstrap.</p>
+						<p>
+						</p>
+					</b:container>
+				</b:jumbotron>
+ -->
+
+				<b:container>
+					<b:row>
+						<p:dialog header="Login"
+							modal="false" closable="false" position="center"
+							widgetVar="modalLogin" minWidth="400" width="330"
+							showEffect="slide" draggable="false" resizable="false"
+							visible="true">
+
+							<center>
+								<h:outputText value="Usuário e/	ou senha inválidos!"
+									rendered="#{param.error}"
+									style="color:darkred; font-size: 14px; padding-bottom: 30px;" />
+
+								<form action="j_spring_security_check" method="post">
+									<h:panelGrid columns="2" cellpadding="20"
+										style="font-weight: bold;">
+										<h:outputLabel for="j_username" value="* Usuário:" />
+										<h:inputText id="j_username" size="15" />
+
+										<h:outputLabel for="j_password" value="* Senha:" />
+										<h:inputSecret id="j_password" size="15" />
+									</h:panelGrid>
+									<h:commandButton value="Entrar" />
+								</form>
+							</center>
+						</p:dialog>
+
+					</b:row>
+
+
+				</b:container>
+
+			</ui:define>
+		</ui:composition>
+
+
+
+
+	</h:body>
+</f:view>
+</html>

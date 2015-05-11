@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title></title>
+	<meta name="author" content="The Author"></meta>
+
+	<style type="text/css">
+.ui-menu, .ui-megamenu, .ui-widget {
+	font-size: 12px;
+	!
+	important;
+}
+
+.ui-panelgrid tr, td {
+	border: 1 !important;
+}
+
+.technosGrid td, tr {
+	border: 0 !important;
+}
+</style>
+
+</h:head>
+
+
+<h:body style="padding: 20px;">
+
+
+	<ui:composition template="/template/paginaModelo.xhtml">
+
+		<ui:define name="content">
+
+
+			<b:container>
+
+
+				<div align="center">
+
+					<h:form id="formPrincipal">
+
+						<p:ajaxStatus
+							style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;"
+							id="ajaxStatusPanel">
+							<f:facet name="start">
+								<h:graphicImage value="/resources/img/ajax.gif" />
+							</f:facet>
+
+							<f:facet name="complete">
+								<h:outputText value="" />
+							</f:facet>
+						</p:ajaxStatus>
+
+
+						<p:messages id="msgGeral" closable="true" showDetail="true" />
+						<p:growl id="growl" showDetail="true" sticky="true" life="2000" />
+
+						<p:dataTable id="tabela" var="lista"
+							value="#{usuarioMB.lista}" paginator="true" rows="11"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" paginatorPosition="bottom"
+							emptyMessage="Nenhum usuário encontrado"
+							style="width:100%">
+
+
+							<f:facet name="header">Lista de Usuários</f:facet>
+
+							<p:column headerText="Nome" sortBy="#{lista.username}" filterBy="#{lista.username}">
+								<h:outputText value="#{lista.username}" />
+							</p:column>
+
+							<p:column headerText="Ativo" sortBy="#{lista.enable}" filterBy="#{lista.enable}">
+								<h:outputText value="#{lista.enable}" />
+							</p:column>
+
+							<p:column headerText="Ações" exportable="false">
+								<div align="center">
+
+									<p:commandButton icon="ui-icon-pencil"
+										oncomplete="PF('dialogAlterar').show();" immediate="true"
+										update=":formPrincipal:msgGeral :formPrincipal:growl :formPrincipal:tabela :formAlterar">
+
+										<f:setPropertyActionListener target="#{usuarioMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+									<p:commandButton update=":formExcluir" icon="ui-icon-trash"
+										oncomplete="PF('dialogExcluir').show();" immediate="true">
+
+										<f:setPropertyActionListener target="#{usuarioMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+								</div>
+							</p:column>
+
+							<f:facet name="footer">
+
+								<p:commandButton value="Novo" id="cadastrar" immediate="true"
+									oncomplete="PF('dialogCadastrar').show();"
+									update=":formPrincipal:msgGeral :formPrincipal:growl :formCadastrar" />
+
+							</f:facet>
+
+						</p:dataTable>
+
+					</h:form>
+
+
+				</div>
+
+
+				<p:dialog header="Alterar" widgetVar="dialogAlterar" id="Alterar"
+					modal="true" closeOnEscape="true" width="500">
+					<h:form id="formAlterar">
+
+						<p:messages id="msgAlterar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelCadastrar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+
+							<h:outputText value="Nome" />
+							<p:inputText value="#{usuarioMB.registro.username}" required="true"
+								requiredMessage="campo [Nome] obrigatório." id="fld1" />
+							<p:message for="fld1" display="text" />
+
+							<h:outputText value="Senha" />
+							<p:password value="#{usuarioMB.registro.password}" required="true"
+ 								requiredMessage="campo [Nome] obrigatório." id="fld2" />
+							<p:message for="fld2" display="text" />
+
+							<h:outputText value="Ativo" />
+							<p:inputText value="#{usuarioMB.registro.enable}" required="true"
+								requiredMessage="campo [Ativo] obrigatório." id="fld3" />
+							<p:message for="fld3" display="text" />
+
+						</p:panelGrid>
+
+						<p:commandButton value="Salvar" icon="ui-icon-disk"
+							actionListener="#{usuarioMB.cadastrar}"
+							update=":formPrincipal:tabela :formAlterar:msgAlterar  :formPrincipal:growl"
+							oncomplete="PF('dialogAlterar').hide();" />
+					</h:form>
+				</p:dialog>
+
+
+
+				<p:dialog header="Novo" widgetVar="dialogCadastrar" id="Cadastrar"
+					modal="true" closeOnEscape="true" width="500">
+					<h:form id="formCadastrar">
+
+						<p:messages id="msgCadastrar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelCadastrar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+	
+							<h:outputText value="Nome" />
+							<p:inputText value="#{usuarioMB.registro.username}" required="true"
+								requiredMessage="campo [Nome] obrigatório." id="fld1" />
+							<p:message for="fld1" display="text" />
+
+							<h:outputText value="Senha" />
+							<p:password value="#{usuarioMB.registro.password}" required="true"
+ 								requiredMessage="campo [Nome] obrigatório." id="fld2" />
+							<p:message for="fld2" display="text" />
+
+							<h:outputText value="Ativo" />
+							<p:inputText value="#{usuarioMB.registro.enable}" required="true"
+								requiredMessage="campo [Ativo] obrigatório." id="fld3" />
+							<p:message for="fld3" display="text" />
+
+						</p:panelGrid>
+
+						<p:commandButton value="Salvar" icon="ui-icon-disk"
+							actionListener="#{usuarioMB.cadastrar}"
+							update=":formPrincipal:tabela :formCadastrar:msgCadastrar :formPrincipal:growl"
+							oncomplete="PF('dialogCadastrar').hide();" />
+
+					</h:form>
+				</p:dialog>
+
+				<h:form id="formExcluir">
+					<p:confirmDialog id="Excluir"
+						message="Excluir  #{usuarioMB.registro.username} ?"
+						header="Excluir" closeOnEscape="true" severity="alert"
+						widgetVar="dialogExcluir">
+
+						<p:commandButton id="confirm" value="Sim"
+							oncomplete="PF('dialogExcluir').hide();"
+							actionListener="#{usuarioMB.excluir}"
+							update=":formPrincipal:tabela" />
+
+						<p:commandButton id="decline" value="Não"
+							onclick="PF('dialogExcluir').hide();" type="button" />
+
+					</p:confirmDialog>
+				</h:form>
+
+
+			</b:container>
+
+
+
+		</ui:define>
+	</ui:composition>
+
+
+</h:body>
+</html>

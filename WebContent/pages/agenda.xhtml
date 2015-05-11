@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title></title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/paginaAgenda.xhtml">
+
+		<ui:define name="content">
+
+
+			<b:container>
+
+
+				<div id="conteudo">
+
+					<h:form id="form1">
+
+						<p:schedule widgetVar="meucalendario" locale="pt"
+							value="#{agendaForm.eventModel}">
+
+							<!-- eventos -->
+							<p:ajax event="dateSelect" listener="#{agendaForm.quandoNovo}"
+								update="eventDetails" oncomplete="PF('caixaDialogo').show()" />
+							<p:ajax event="eventSelect"
+								listener="#{agendaForm.quandoSelecionado}" update="eventDetails"
+								oncomplete="PF('caixaDialogo').show()" />
+							<p:ajax event="eventMove" listener="#{agendaForm.quandoMovido}"
+								update="mensagens" oncomplete="meucalendario.update()" />
+							<p:ajax event="eventResize"
+								listener="#{agendaForm.quandoRedimensionado}" update="mensagens"
+								oncomplete="meucalendario.update()" />
+
+						</p:schedule>
+
+						<p:dialog widgetVar="caixaDialogo" header="Evento" width="500"
+							resizable="false" modal="true" showEffect="clip"
+							hideEffect="clip">
+
+	
+						<p:messages id="mensagens" closable="true"  />
+	
+							<p:outputPanel id="eventDetails">
+
+								<h:panelGrid columns="2">
+
+									<h:outputLabel for="tipo" value="Tipo:" />
+									<p:selectOneMenu id="tipo" value="#{agendaForm.tipoAgenda}">
+										<f:selectItems value="#{agendaForm.tiposAgenda}" />
+									</p:selectOneMenu>
+
+									<h:outputLabel for="descricao" value="Descrição:" />
+									<p:inputText id="descricao" maxlength="60" required="true" size="40"
+									    requiredMessage="campo [Descrição] obrigatório. Máximo 60 posições." 
+									    autocomplete="#{agendaMB.completeTexto}"
+										value="#{agendaForm.agenda.descricao}" />
+
+									<h:outputLabel id="lbEvento" value="Evento" />
+									<p:selectOneMenu id="fldEvento"
+										value="#{agendaForm.eventoSelecionado}">
+										<f:selectItem itemLabel="#{agendaForm.agenda.evento.nome}"
+											itemValue="#{agendaForm.agenda.evento.id}" />
+										<f:selectItems value="#{agendaForm.listaEvento}" var="con1"
+											itemLabel="#{con1.nome}" itemValue="#{con1.id}" />
+									</p:selectOneMenu>
+
+
+									<h:outputLabel for="inicio" value="Início:" />
+									<p:calendar id="inicio" required="true"
+										value="#{agendaForm.agenda.dataInicio}"
+										pattern="dd/MM/yyyy HH:mm" />
+
+									<h:outputLabel for="fim" value="Fim:" />
+									<p:calendar id="fim" required="true"
+										value="#{agendaForm.agenda.dataFim}"
+										pattern="dd/MM/yyyy HH:mm" />
+
+									<h:outputLabel for="diaTodo" value="Dia todo?:" />
+									<p:selectBooleanCheckbox id="diaTodo"
+										value="#{agendaForm.agenda.diaTodo}" />
+
+								</h:panelGrid>
+
+								<p:separator />
+
+								<p:commandButton value="Salvar"
+									actionListener="#{agendaForm.salvar()}"
+									oncomplete="handleRequest(xhr, status, args);"
+									update="mensagens" />
+
+								<script type="text/javascript">
+									function handleRequest(xhr, status, args) {
+										if (!args.validationFailed) {
+											PF('meucalendario').update();
+											PF('caixaDialogo').hide();
+										} else {
+											jQuery('#eventDetails').effect("shake", {
+												times : 3
+											}, 300);
+										}
+									}
+								</script>
+
+
+							</p:outputPanel>
+
+						</p:dialog>
+
+					</h:form>
+
+				</div>
+
+			</b:container>
+
+		</ui:define>
+	</ui:composition>
+
+
+
+</h:body>
+</html>

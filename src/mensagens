@@ -1,0 +1,5 @@
+javax.faces.component.UIInput.REQUIRED={0}: Preenchimento obrigatório.
+javax.faces.converter.BigIntegerConverter.BIGINTEGER={0} deve ser um número de um ou mais dígitos.
+ 
+javax.faces.converter.IntegerConverter.INTEGER={2}: deve ser um número de um ou mais dígitos.
+javax.faces.converter.LongConverter.LONG={2}: deve ser um número de um ou mais dígitos.

@@ -1,0 +1,23 @@
+
+    @Size(min=2,max=5)
+    private String name;
+     
+    @Min(10) @Max(20)
+    private Integer age;
+     
+    @DecimalMax(value= "99.9", message = "Shold not exceed 99.9")
+    private Double amount;
+     
+    @Digits(integer=3,fraction=2)
+    private Double amount2;
+     
+    @AssertTrue
+    private boolean checked;
+ 
+    @Past
+    private Date pastDate;
+     
+    @Future
+    private Date futureDate;
+     
+    @Pattern(regexp="^[-+]?\\d+$")

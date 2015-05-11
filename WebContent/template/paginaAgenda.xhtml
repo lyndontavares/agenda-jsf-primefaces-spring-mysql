@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+	<style type="text/css">
+	
+	#conteudo {
+		padding: 20px;
+		height: 350px;
+	}
+	
+	.global .fc-event, .global a, .global .fc-event-inner {
+		background-color: #6B238E !important;;
+		border-color: #6B238E !important;;
+		color: white !important;;
+	}
+	
+	.pessoal .fc-event, .pessoal a, .pessoal .fc-event-inner {
+		background-color: blue !important;;
+		border-color: blue !important;;
+		color: white !important;
+		
+	.ui-panelgrid tr, td {
+		border: 0 !important;
+	}
+	
+	.technosGrid td, tr {
+		border: 0 !important;
+	}
+
+	</style>
+
+	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Data Atual',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo Dia'
+		};
+	</script>
+
+</h:head>
+
+
+<h:body style="padding: 20px;">
+	<div id="page">
+		<div id="header">
+			<ui:insert name="header">
+
+				<!-- fixed="top" -->
+				<b:navBar brand="Web 1.0" brandHref="#" inverse="true">
+					<b:navbarLinks>
+							<b:navLink value ="Agenda" href="/pages/agenda.xhtml"></b:navLink>
+
+						<b:dropMenu value="Cadastros">
+							<b:navLink value ="Contatos" href="/pages/contato.xhtml"></b:navLink>
+							<b:navLink value ="Eventos" href="/pages/evento.xhtml"></b:navLink>
+							<b:navLink value ="Pagamentos" href="/pages/pagamento.xhtml"></b:navLink>
+						</b:dropMenu>
+
+						<b:dropMenu value="Configurações">
+     						<b:navLink value="Tipos de Contato" href="/pages/tipoContato.xhtml"></b:navLink>
+    						<b:navLink value="Usuários" href="/pages/usuario.xhtml"></b:navLink>
+    						<b:navLink value="Permissões" href="/pages/funcionalidade.xhtml"></b:navLink>
+						</b:dropMenu>
+
+						<b:navLink value="Sair" href="/j_spring_security_logout"></b:navLink>
+					</b:navbarLinks>
+				</b:navBar>
+
+			</ui:insert>
+		</div>
+
+
+		<div id="content">
+
+			<ui:insert name="content">
+			</ui:insert>
+
+			<hr />
+			<footer>
+			<p align="center">Web 1.0 © Company 2014</p>
+			</footer>
+
+		</div>
+
+		<div id="footer">
+			<ui:insert name="footer">
+			</ui:insert>
+		</div>
+
+
+	</div>
+
+
+</h:body>
+</html>

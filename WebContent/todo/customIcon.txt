@@ -1,0 +1,25 @@
+.ui-menu, .ui-megamenu, .ui-widget {
+	font-size: 12px;
+	!
+	important;
+}
+	
+
+.ui-menu, .ui-megamenu, .ui-widget {
+	font-size: 12px;
+	!
+	important;
+}
+
+.ui-icon-calendar {
+    background-image: <your URL> !important;
+    background-position: center center !important;
+    width: 16px;
+    height: 16px;
+}
+
+.img-button-help { 
+   background-image: url('img/mag.ico') !important;  
+   background-position: center !important;
+}
+

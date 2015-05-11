@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>CrudJSF</title>
+</h:head>
+<h:body>
+
+	<ui:composition template="/template/layout.xhtml">
+
+		<ui:define name="content">
+
+			<p:pieChart value="#{graficoMB.modelo}" legendPosition="w"  id="g1" 
+				showDataLabels="true" title="Quantidade de projetos por Empresa"
+				style="width:100%;height:500px;" />
+
+
+		</ui:define>
+	</ui:composition>
+
+
+</h:body>
+</html>

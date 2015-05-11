@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title></title>
+	<meta name="author" content="The Author"></meta>
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/template/paginaModelo.xhtml">
+
+		<ui:define name="content">
+
+			<b:container>
+
+				<div align="center">
+					<h:form id="formPrincipal">
+
+						<p:ajaxStatus
+							style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;"
+							id="ajaxStatusPanel">
+							<f:facet name="start">
+								<h:graphicImage value="/resources/img/load5.gif" />
+							</f:facet>
+
+							<f:facet name="complete">
+								<h:outputText value="" />
+							</f:facet>
+						</p:ajaxStatus>
+
+						<p:messages id="msgGeral" closable="true" showDetail="true" />
+						<p:growl id="growl" showDetail="true" sticky="true" life="5000" />
+
+						<p:panel id="basic" header="Filtro de Pagamentos"  
+							style="margin-bottom:20px">
+							<h:panelGrid columns="3" cellpadding="10">
+								<h:outputText value="Período:" />
+								
+							</h:panelGrid>
+						</p:panel>
+
+
+
+						<p:dataTable id="tabela" var="lista" value="#{pagamentoMB.lista}"
+							paginator="true" rows="11"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" paginatorPosition="bottom"
+							emptyMessage="Nenhum #{pagamentoMB.registro.getDescricaoSingular()} encontrado"
+							style="width:100%">
+
+							<f:facet name="header">Lista de #{pagamentoMB.registro.getDescricaoPlural()}</f:facet>
+
+							<p:column headerText="Id" sortBy="#{lista.id}" width="80"  
+								filterBy="#{lista.id}">
+								<h:outputText value="#{lista.id}" />
+							</p:column>
+
+							<p:column headerText="Contato"
+								sortBy="#{lista.evento.contato.nome}" 
+								filterBy="#{lista.evento.contato.nome}">
+								<h:outputText value="#{lista.evento.contato.nome}" />
+							</p:column>
+
+							<p:column headerText="Evento" sortBy="#{lista.evento.nome}"
+								filterBy="#{lista.evento.nome}">
+								<h:outputText value="#{lista.evento.nome}" />
+							</p:column>
+
+							<p:column headerText="Histórico Pagto" sortBy="#{lista.nome}"
+								filterBy="#{lista.nome}">
+								<h:outputText value="#{lista.nome}" />
+							</p:column>
+
+							<p:column headerText="Data Ven."
+								sortBy="#{lista.dataVencimentoFormatada}"
+								filterBy="#{lista.dataVencimentoFormatada}">
+								<h:outputText value="#{lista.dataVencimentoFormatada}" />
+							</p:column>
+
+							<p:column headerText="Data Pag."
+								sortBy="#{lista.dataPagamentoFormatada}"
+								filterBy="#{lista.dataPagamentoFormatada}">
+								<h:outputText value="#{lista.dataPagamentoFormatada}" />
+							</p:column>
+
+							<p:column headerText="Valor" sortBy="#{lista.valorPrevisto}"
+							style="text-align:right"
+								filterBy="#{lista.valor}">
+								<h:outputText value="#{lista.valor}" > <f:convertNumber type="currency" currencySymbol="R$" /></h:outputText>
+							</p:column>
+
+							<p:column headerText="Situação" sortBy="#{lista.situacao}"
+								filterBy="#{lista.situacao}"
+								style="#{pagamentoMB.listaSituacao[lista.situacao].toCss()}">
+
+								<h:outputText
+									value="#{pagamentoMB.listaSituacao[lista.situacao].toString()}" />
+							</p:column>
+
+
+							<p:column headerText="Ações" exportable="false">
+								<div align="center">
+
+									<p:commandButton icon="ui-icon-pencil"
+										oncomplete="PF('dialogAlterar').show();" immediate="true"
+										update=":formPrincipal:msgGeral :formPrincipal:growl :formPrincipal:tabela :formAlterar">
+
+										<f:setPropertyActionListener target="#{pagamentoMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+
+									<p:commandButton icon="ui-icon-trash" update=":formExcluir"
+										oncomplete="PF('dialogExcluir').show();" immediate="true">
+
+										<f:setPropertyActionListener target="#{pagamentoMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+
+								</div>
+							</p:column>
+
+
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="6" style="text-align:right"
+										footerText="Total Geral:" />
+									<p:column colspan="1" footerText="#{pagamentoMB.totalPagto}"  
+										style="text-align:right" />
+									<p:column colspan="2" footerText=" " />
+								</p:row>
+							</p:columnGroup>
+
+
+
+							<f:facet name="footer">
+
+								<p:commandButton value="Novo" immediate="true"
+									oncomplete="PF('dialogCadastrar').show();"
+									update=":formPrincipal:msgGeral :formPrincipal:growl :formCadastrar :formPrincipal:tabela">
+								</p:commandButton>
+
+
+								<p:commandButton value="Exporta Excel" ajax="false">
+									<p:dataExporter type="xls" target="tabela" fileName="empresa" />
+								</p:commandButton>
+
+								<p:commandButton value="Exporta PDF" ajax="false">
+									<p:dataExporter type="pdf" target="tabela" fileName="empresa" />
+								</p:commandButton>
+
+								<p:commandButton id="toggler" type="button" value="Colunas"
+									style="float:right" icon="ui-icon-calculator" />
+
+								<p:columnToggler datasource="tabela" trigger="toggler" />
+
+							</f:facet>
+
+						</p:dataTable>
+
+					</h:form>
+
+				</div>
+
+
+				<p:dialog header="Novo" widgetVar="dialogCadastrar" id="Cadastrar"
+					modal="true" closeOnEscape="true">
+					<h:form id="formCadastrar" prependId="false">
+
+						<p:messages id="msgCadastrar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelCadastrar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+
+							<h:outputText value="Id" />
+							<p:inputText value="#{pagamentoMB.registro.id}" readonly="true"
+								placeholder="Automático" id="fldId" />
+							<p:message for="fldId" display="text" />
+
+							<h:outputLabel value="Evento" />
+							<p:selectOneMenu id="fldContato"
+								value="#{pagamentoMB.eventoSelecionado}" required="true"
+								requiredMessage="campo [Contato] obrigatório.">
+								<f:selectItem itemLabel="Selecione..." itemValue="" />
+								<f:selectItems value="#{pagamentoMB.listaEvento}" var="con1"
+									id="s1" itemLabel="#{con1.nome} - #{con1.contato.nome}"
+									itemValue="#{con1.id}" />
+							</p:selectOneMenu>
+							<p:message for="fldContato" display="text" />
+
+							<h:outputText value="Histórico Pagamento" />
+							<p:inputText value="#{pagamentoMB.registro.info}" required="true"
+								requiredMessage="campo [Histórico Pagamento] obrigatório."
+								id="fldInfo" size="40" />
+							<p:message for="fldInfo" display="text" />
+
+							<h:outputText value="Data Vencimento" />
+							<p:calendar value="#{pagamentoMB.registro.dataVencimento}"
+								required="true" showOn="button" locale="pt" mask="99-99-9999"
+								requiredMessage="campo [Data Vencimento] obrigatório." id="dv" />
+							<p:message for="dv" display="text" />
+
+							<h:outputText value="Data Pagamento" />
+							<p:calendar value="#{pagamentoMB.registro.dataPagamento}"
+								showOn="button" locale="pt" mask="99-99-9999" id="dp" />
+							<p:message for="dp" display="text" />
+
+							<h:outputText value="Valor" />
+							<pe:inputNumber id="valor2" value="#{pagamentoMB.registro.valor}"
+								symbol="R$ " required="true"
+								requiredMessage="campo [Valor] obrigatório." />
+							<p:message for="valor2" display="text" />
+
+						</p:panelGrid>
+
+						<p:commandButton value="Salvar" icon="ui-icon-disk"
+							actionListener="#{pagamentoMB.cadastrar}"
+							update=":formPrincipal:tabela :formCadastrar:msgCadastrar "
+							oncomplete="handleRequest(xhr, status, args);" />
+
+						<script type="text/javascript">
+							function handleRequest(xhr, status, args) {
+								if (!args.validationFailed) {
+									PF('dialogCadastrar').hide();
+								} else {
+									jQuery('#formCadastrar').effect("shake", {
+										times : 3
+									}, 300);
+								}
+							}
+						</script>
+					</h:form>
+				</p:dialog>
+
+
+
+
+				<p:dialog header="Editar" widgetVar="dialogAlterar" id="Alterar"
+					modal="true" closeOnEscape="true">
+					<h:form id="formAlterar">
+
+						<p:messages id="msgAlterar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelCadastrar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+
+							<h:outputText value="Id" />
+							<p:inputText value="#{pagamentoMB.registro.id}" readonly="true"
+								placeholder="Automático" id="fldId" />
+							<p:message for="fldId" display="text" />
+
+							<h:outputLabel value="Evento" />
+							<p:selectOneMenu id="fldContato"
+								value="#{pagamentoMB.eventoSelecionado}" required="true"
+								requiredMessage="campo [Contato] obrigatório.">
+								<f:selectItem itemLabel="#{pagamentoMB.registro.evento.nome}"
+									itemValue="#{pagamentoMB.registro.evento.id}" />
+								<f:selectItems value="#{pagamentoMB.listaEvento}" var="con1"
+									id="s1" itemLabel="#{con1.nome}" itemValue="#{con1.id}" />
+							</p:selectOneMenu>
+							<p:message for="fldContato" display="text" />
+
+							<h:outputText value="Histórico Pagamento" />
+							<p:inputText value="#{pagamentoMB.registro.info}" required="true"
+								requiredMessage="campo [Histórico Pagamento] obrigatório."
+								id="fldInfo" size="40" />
+							<p:message for="fldInfo" display="text" />
+
+
+							<h:outputText value="Data Vencimento" />
+							<p:calendar value="#{pagamentoMB.registro.dataVencimento}"
+								required="true" showOn="button" locale="pt" mask="99-99-9999"
+								requiredMessage="campo [Data Vencimento] obrigatório." id="dv" />
+							<p:message for="dv" display="text" />
+
+							<h:outputText value="Data Pagamento" />
+							<p:calendar value="#{pagamentoMB.registro.dataPagamento}"
+								showOn="button" locale="pt" mask="99-99-9999" id="dp" />
+							<p:message for="dp" display="text" />
+
+							<h:outputText value="Valor" />
+							<pe:inputNumber id="valor2" value="#{pagamentoMB.registro.valor}"
+								symbol="R$ " required="true"
+								requiredMessage="campo [Valor] obrigatório." />
+							<p:message for="valor2" display="text" />
+
+						</p:panelGrid>
+
+						<p:commandButton value="Salvar" icon="ui-icon-disk"
+							actionListener="#{pagamentoMB.cadastrar}"
+							update=":formPrincipal:tabela :formAlterar:msgAlterar "
+							oncomplete="handleRequest(xhr, status, args);" />
+
+						<script type="text/javascript">
+							function handleRequest(xhr, status, args) {
+								if (!args.validationFailed) {
+									PF('dialogAlterar').hide();
+								} else {
+									jQuery('#formAlterar').effect("shake", {
+										times : 3
+									}, 300);
+								}
+							}
+						</script>
+					</h:form>
+				</p:dialog>
+
+
+
+				<h:form id="formExcluir">
+					<p:confirmDialog id="Excluir"
+						message="Excluir PAgamento: #{pagamentoMB.registro.id}?"
+						header="Excluir" closeOnEscape="true" severity="alert"
+						widgetVar="dialogExcluir">
+
+						<p:commandButton id="confirm" value="Sim"
+							oncomplete="PF('dialogExcluir').hide();"
+							actionListener="#{pagamentoMB.excluir}"
+							update=":formPrincipal:tabela" />
+
+						<p:commandButton id="decline" value="Não"
+							onclick="PF('dialogExcluir').hide();" type="button" />
+
+					</p:confirmDialog>
+				</h:form>
+
+
+			</b:container>
+
+		</ui:define>
+	</ui:composition>
+
+
+
+
+</h:body>
+</html>

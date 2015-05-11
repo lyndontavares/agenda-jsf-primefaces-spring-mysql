@@ -1,0 +1,431 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:t="http://technos/jsf/composite/cc">
+
+<h:head>
+	<title></title>
+	<meta name="author" content="The Author"></meta>
+</h:head>
+
+<h:body>
+
+	<ui:composition template="/template/paginaModelo.xhtml">
+
+		<ui:define name="content">
+
+			<b:container>
+
+				<div align="center">
+					<h:form id="formPrincipal">
+
+						<p:ajaxStatus
+							style="width:64px;height:64px;position:fixed;right:5px;bottom:5px;"
+							id="ajaxStatusPanel">
+							<f:facet name="start">
+								<h:graphicImage value="/resources/img/load5.gif" />
+							</f:facet>
+
+							<f:facet name="complete">
+								<h:outputText value="" />
+							</f:facet>
+						</p:ajaxStatus>
+
+
+						<p:ribbon>
+							<p:tab title="File">
+								<p:ribbonGroup label="Options">
+									<p:commandButton value="New" icon="ui-ribbonicon-new"
+										styleClass="ui-ribbon-bigbutton" type="button" />
+									<p:commandButton value="Save" icon="ui-ribbonicon-save"
+										styleClass="ui-ribbon-bigbutton" type="button" />
+								</p:ribbonGroup>
+
+								<p:ribbonGroup label="Clipboard" style="width:120px">
+									<p:selectManyButton>
+										<p:commandButton value="Paste" icon="ui-ribbonicon-paste"
+											styleClass="ui-ribbon-bigbutton" type="button" />
+										<p:commandButton value="Cut" icon="ui-ribbonicon-cut"
+											style="width:64px" type="button" />
+										<p:commandButton value="Print" icon="ui-ribbonicon-print"
+											style="width:64px" type="button" />
+									</p:selectManyButton>
+								</p:ribbonGroup>
+
+								<p:ribbonGroup label="Fonts" style="width:220px">
+									<p:selectOneMenu appendTo="@this">
+										<f:selectItem itemLabel="Arial" itemValue="0" />
+										<f:selectItem itemLabel="Comis Sans" itemValue="1" />
+										<f:selectItem itemLabel="Helvetica" itemValue="2" />
+										<f:selectItem itemLabel="Times New Roman" itemValue="3" />
+										<f:selectItem itemLabel="Verdana" itemValue="4" />
+									</p:selectOneMenu>
+
+									<p:selectOneMenu appendTo="@this">
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="12" itemValue="12" />
+										<f:selectItem itemLabel="14" itemValue="14" />
+										<f:selectItem itemLabel="18" itemValue="18" />
+										<f:selectItem itemLabel="24" itemValue="24" />
+										<f:selectItem itemLabel="36" itemValue="36" />
+										<f:selectItem itemLabel="72" itemValue="72" />
+									</p:selectOneMenu>
+
+									<p:selectManyButton>
+										<f:selectItem itemLabel="b" itemValue="b" />
+										<f:selectItem itemLabel="u" itemValue="u" />
+										<f:selectItem itemLabel="i" itemValue="i" />
+									</p:selectManyButton>
+
+									<p:colorPicker />
+								</p:ribbonGroup>
+							</p:tab>
+
+							<p:tab title="View">
+								<p:ribbonGroup label="Zoom">
+									<p:commandButton value="In" icon="ui-ribbonicon-zoomin"
+										styleClass="ui-ribbon-bigbutton" type="button" />
+									<p:commandButton value="Out" icon="ui-ribbonicon-zoomout"
+										styleClass="ui-ribbon-bigbutton" type="button" />
+								</p:ribbonGroup>
+							</p:tab>
+						</p:ribbon>
+
+						<p:messages id="msgGeral" closable="true" showDetail="true"
+							escape="false" />
+						<p:growl id="growl" showDetail="true" sticky="true" life="5000" />
+
+						<p:dataTable id="tabela" var="lista" value="#{contatoMB.lista}"
+							paginator="true" rows="11"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" paginatorPosition="bottom"
+							emptyMessage="Nenhum #{contatoMB.registro.getDescricaoSingular()} encontrado"
+							style="width:100%">
+
+							<f:facet name="header">#{contatoMB.registro.getDescricaoPlural()}</f:facet>
+
+
+							<p:column headerText="Id" sortBy="#{lista.id}" width="80"
+								filterBy="#{lista.id}">
+								<h:outputText value="#{lista.id}" />
+							</p:column>
+
+							<p:column headerText="Nome" sortBy="#{lista.nome}"
+								filterBy="#{lista.nome}">
+								<h:outputText value="#{lista.nome}" />
+							</p:column>
+
+							<p:column headerText="Registro"
+								sortBy="#{lista.dataCadastroFormatada}"
+								filterBy="#{lista.dataCadastroFormatada}">
+								<h:outputText value="#{lista.dataCadastroFormatada}" />
+							</p:column>
+
+							<p:column headerText="Telefones" sortBy="#{lista.telefone}"
+								filterBy="#{lista.telefone}">
+								<h:outputText value="#{lista.telefone}" />
+							</p:column>
+
+							<p:column headerText="E-mail" sortBy="#{lista.email}"
+								filterBy="#{lista.email}">
+								<h:outputText value="#{lista.email}" />
+
+							</p:column>
+
+							<p:column headerText="Situação" sortBy="#{lista.situacao}"
+								style="#{contatoMB.listaSituacao[lista.situacao].toCss()}"
+								filterBy="#{lista.situacao}">
+
+								<h:outputText
+									value="#{contatoMB.listaSituacao[lista.situacao].toString()}" />
+							</p:column>
+
+
+							<p:column headerText="Ações" exportable="false">
+								<div align="center">
+
+									<p:commandButton icon="ui-icon-pencil"
+										oncomplete="PF('dialogAlterar').show();" immediate="true"
+										update=":formPrincipal:msgGeral :formPrincipal:growl :formPrincipal:tabela :formAlterar">
+
+										<f:setPropertyActionListener target="#{contatoMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+
+									<p:commandButton icon="ui-icon-trash" update=":formExcluir"
+										oncomplete="PF('dialogExcluir').show();" immediate="true">
+
+										<f:setPropertyActionListener target="#{contatoMB.registro}"
+											value="#{lista}" />
+									</p:commandButton>
+
+
+								</div>
+							</p:column>
+
+							<f:facet name="footer">
+
+
+								<p:commandButton value="Novo Contato" immediate="true"
+									oncomplete="PF('dialogCadastrar').show();"
+									update=":formPrincipal:msgGeral :formPrincipal:growl :formCadastrar :formPrincipal:tabela" />
+
+
+								<p:commandButton value="Exporta Excel" ajax="false">
+									<p:dataExporter type="xls" target="tabela" fileName="empresa" />
+								</p:commandButton>
+								<p:commandButton value="Exporta PDF" ajax="false">
+									<p:dataExporter type="pdf" target="tabela" fileName="empresa" />
+								</p:commandButton>
+
+
+								<p:commandButton id="toggler" type="button" value="Colunas"
+									style="float:right" icon="ui-icon-calculator" />
+
+								<p:columnToggler datasource="tabela" trigger="toggler" />
+
+							</f:facet>
+
+						</p:dataTable>
+
+					</h:form>
+
+				</div>
+
+
+				<p:dialog header="Novo" widgetVar="dialogCadastrar" id="Cadastrar"
+					width="600" modal="true" closeOnEscape="true">
+					<h:form id="formCadastrar">
+
+						<p:messages id="msgCadastrar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelCadastrar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+
+							<h:outputText value="Id" />
+							<p:inputText value="#{contatoMB.registro.id}" readonly="true"
+								placeholder="Automático" id="fldId" />
+							<p:message for="fldId" display="text" />
+
+							<h:outputText value="Data Cadastro" id="lblDataCadastro" />
+							<p:calendar value="#{contatoMB.registro.dataCadastro}"
+								yearRange="c-10:c+10" required="true" showOn="button"
+								locale="pt" mask="99-99-9999"
+								requiredMessage="campo [Data Cadastro] obrigatório."
+								id="fldData" />
+							<p:message for="fldData" display="text" />
+
+							<h:outputText value="Nome" />
+							<p:inputText value="#{contatoMB.registro.nome}" required="true"
+								size="50" requiredMessage="campo [Nome] obrigatório."
+								id="fldNome" />
+							<p:message for="fldNome" display="text" />
+
+							<h:outputText value="Telefones" />
+							<p:inputText value="#{contatoMB.registro.telefone}"
+								required="true" size="50"
+								requiredMessage="campo [Telefone] obrigatório." id="fldTel" />
+							<p:message for="fldTel" display="text" />
+
+							<h:outputText value="E-mail" />
+							<p:inputText value="#{contatoMB.registro.email}" required="false"
+								size="50" requiredMessage="campo [Email] obrigatório."
+								validatorMessage="campo [E-mail] com formato errado."
+								id="fldEmail">
+								<t:validateEmail />
+							</p:inputText>
+
+							<p:message for="fldEmail" display="text" />
+
+							<h:outputText value="Informações" />
+							<p:editor value="#{contatoMB.registro.info}" id="fldInfo"></p:editor>
+							<p:message for="fldInfo" display="text" />
+
+
+							<h:outputLabel id="lbSit" value="Situação" />
+							<p:selectOneRadio id="sit2"
+								value="#{contatoMB.situacaoSelecionada}">
+								<f:selectItems value="#{contatoMB.listaSituacao}" />
+							</p:selectOneRadio>
+							<p:message for="sit2" display="text" />
+
+
+						</p:panelGrid>
+
+						<p:commandButton value=" Salvar " icon="ui-icon-disk"
+							actionListener="#{contatoMB.cadastrar}"
+							update=":formPrincipal:tabela :formCadastrar:msgCadastrar "
+							oncomplete="handleRequest1(xhr, status, args);" look="primary" />
+
+						<script type="text/javascript">
+							function handleRequest1(xhr, status, args) {
+								if (!args.validationFailed) {
+									PF('dialogCadastrar').hide();
+								} else {
+									jQuery('#formCadastrar').effect("shake", {
+										times : 3
+									}, 300);
+								}
+							}
+						</script>
+
+
+						<p:commandButton value=" Salvar e Novo " icon="ui-icon-disk"
+							actionListener="#{contatoMB.cadastrar}"
+							update=":formPrincipal:tabela :formCadastrar:msgCadastrar :formCadastrar"
+							oncomplete="handleRequest2(xhr, status, args);" />
+
+						<script type="text/javascript">
+							function handleRequest2(xhr, status, args) {
+								if (!args.validationFailed) {
+								} else {
+									jQuery('#formCadastrar').effect("shake", {
+										times : 3
+									}, 300);
+								}
+							}
+						</script>
+
+
+						<p:commandButton value=" Fechar " icon="ui-icon-disk"
+							update=":formCadastrar:msgCadastrar :formCadastrar"
+							onclick="PF('dialogCadastrar').hide();return false;">
+							<f:param name="action" value="sair" />
+						</p:commandButton>
+
+
+
+						<b:button outcome="testButton" value="Bookmark" icon="bookmark" look="primary" >
+							<f:param name="testId" value="11" />
+						</b:button>
+
+						<b:button outcome="testButton" value="With Icon" icon="envelope">
+							<f:param name="testId" value="22" />
+						</b:button>
+
+						<b:button outcome="testButton" value="" icon="envelope">
+							<f:param name="testId" value="33" />
+						</b:button>
+
+						<b:button outcome="testButton" value="Bookmark" icon="envelope"
+							disabled="true">
+							<f:param name="testId" value="44" />
+						</b:button>
+
+
+					</h:form>
+				</p:dialog>
+
+
+
+
+				<p:dialog header="Editar" widgetVar="dialogAlterar" id="Alterar"
+					width="600" modal="true" closeOnEscape="true">
+					<h:form id="formAlterar">
+
+						<p:messages id="msgAlterar" closable="true" showDetail="false" />
+
+						<p:panelGrid id="panelAlterar" columns="3"
+							styleClass="technosGrid" style="margin:5px 10px 5px 10px;">
+
+							<h:outputText value="Id" />
+							<p:inputText value="#{contatoMB.registro.id}" readonly="true"
+								placeholder="Automático" id="fldId" />
+							<p:message for="fldId" display="text" />
+
+							<h:outputText value="Data Cadastro" id="lblDataCadastro" />
+							<p:calendar value="#{contatoMB.registro.dataCadastro}"
+								required="true" showOn="button" locale="pt" mask="99-99-9999"
+								requiredMessage="campo [Data Cadastro] obrigatório."
+								id="fldData" />
+							<p:message for="fldData" display="text" />
+
+							<h:outputText value="Nome" />
+							<p:inputText value="#{contatoMB.registro.nome}" required="true"
+								size="50" requiredMessage="campo [Nome] obrigatório."
+								id="fldNome" />
+							<p:message for="fldNome" display="text" />
+
+							<h:outputText value="Telefones" />
+							<p:inputText value="#{contatoMB.registro.telefone}"
+								required="true" size="50"
+								requiredMessage="campo [Telefone] obrigatório." id="fldTel" />
+							<p:message for="fldTel" display="text" />
+
+							<h:outputText value="E-mail" />
+							<p:inputText value="#{contatoMB.registro.email}" required="false"
+								size="50" requiredMessage="campo [Email] obrigatório."
+								id="fldEmail" />
+							<p:message for="fldEmail" display="text" />
+
+							<h:outputText value="Informações" />
+							<p:editor value="#{contatoMB.registro.info}" id="fldInfo"></p:editor>
+							<p:message for="fldInfo" display="text" />
+
+
+							<h:outputLabel id="lbSit" value="Situação" />
+							<p:selectOneRadio id="sit2"
+								value="#{contatoMB.situacaoSelecionada}">
+								<f:selectItems value="#{contatoMB.listaSituacao}" />
+							</p:selectOneRadio>
+							<p:message for="sit2" display="text" />
+
+						</p:panelGrid>
+
+						<p:commandButton value="Salvar" icon="ui-icon-disk"
+							actionListener="#{contatoMB.cadastrar}"
+							update=":formPrincipal:tabela :formAlterar:msgAlterar "
+							oncomplete="handleRequest(xhr, status, args);" />
+
+						<script type="text/javascript">
+							function handleRequest(xhr, status, args) {
+								if (!args.validationFailed) {
+									PF('dialogAlterar').hide();
+								} else {
+									jQuery('#formAlterar').effect("shake", {
+										times : 3
+									}, 300);
+								}
+							}
+						</script>
+					</h:form>
+				</p:dialog>
+
+
+
+				<h:form id="formExcluir">
+					<p:confirmDialog id="Excluir"
+						message="Excluir Contato: #{contatoMB.registro.nome}?"
+						header="Excluir" closeOnEscape="true" severity="alert"
+						widgetVar="dialogExcluir">
+
+						<p:commandButton id="confirm" value="Sim"
+							oncomplete="PF('dialogExcluir').hide();"
+							actionListener="#{contatoMB.excluir}"
+							update=":formPrincipal:tabela :formPrincipal:msgGeral :formPrincipal:growl" />
+
+						<p:commandButton id="decline" value="Não"
+							onclick="PF('dialogExcluir').hide();" type="button" />
+
+					</p:confirmDialog>
+				</h:form>
+
+
+			</b:container>
+
+		</ui:define>
+	</ui:composition>
+
+
+
+
+</h:body>
+</html>
