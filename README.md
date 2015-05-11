@@ -42,42 +42,42 @@ cancelarContato
 
 Eventos
 
-incluirEvento
-editarEvento
-confirmarEvento
-realizarEvento
-cancelarEvento
-expurgarEventoCancelado
-quitarEvento;
+* incluirEvento
+* editarEvento
+* confirmarEvento
+* realizarEvento
+* cancelarEvento
+* expurgarEventoCancelado
+* * quitarEvento;
 gerarParcelaEvento
 
 Parcelas
 
-incluirParcelaEvento
-editarParcelaEvento
-excluirPascelaEvento
-quitarParcelaEvento
-expurgarParcelasCanceladasEvento;
-confirmarPagamento
-cancelarPagamento
+* incluirParcelaEvento
+* editarParcelaEvento
+* * excluirPascelaEvento
+* quitarParcelaEvento
+* expurgarParcelasCanceladasEvento;
+* confirmarPagamento
+* cancelarPagamento
 
 tipoContato
 
-incluirTipoContato
-editarTipoContato
-ativarTipoContato
-inativarTipoContato
-cancelarTipoContato
-expurgarTipoContato
+* incluirTipoContato
+* editarTipoContato
+* ativarTipoContato
+* inativarTipoContato
+* cancelarTipoContato
+* expurgarTipoContato
 
 user
 
-incluirUser
-editarUser
-ativarUser
-inativarUser
-cancelarUser
-expurgarUser
+* incluirUser
+* editarUser
+* ativarUser
+* inativarUser
+* cancelarUser
+* expurgarUser
 
 
 Contato: integraldominio@gmail.com
