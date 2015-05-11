@@ -15,8 +15,8 @@ MySQL
 #Tipos Enumerados
 
 contato: 
-<b>-1</b> cancelado<br>
-<b>0</b ativo <br>
+<p><b>-1</b> cancelado</p>
+<p><b>0</b ativo <br></p>
 <b>1</b inativo <br>
 
 evento: 
