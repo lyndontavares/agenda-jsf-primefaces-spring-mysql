@@ -49,8 +49,8 @@ Eventos
 * realizarEvento
 * cancelarEvento
 * expurgarEventoCancelado
-* * quitarEvento;
-gerarParcelaEvento
+* quitarEvento;
+* gerarParcelaEvento
 
 Parcelas
 
