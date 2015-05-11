@@ -16,20 +16,20 @@ MySQL
 Enumerados
 
 contato: 
-<li>-1 cancelado
-<li>0 ativo 
-<li>1 inativo 
+<li>-1 cancelado</li>
+<li>0 ativo </li>
+<li>1 inativo </li>
 
 evento: 
-<li>-1 cancelado 
-<li>0 aguardando 
-<li>1 confirmado 
-<li>2 realizado 
+<li>-1 cancelado</li> 
+<li>0 aguardando </li>
+<li>1 confirmado </li>
+<li>2 realizado </li>
 
 pagamento: 
-<li>0 aberto 
-<li>1 pago 
-<li>-1 cancelado
+<li>0 aberto </li>
+<li>1 pago </li>
+<li>-1 cancelado</li>
 
 Contatos
 
